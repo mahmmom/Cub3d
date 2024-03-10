@@ -13,7 +13,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "GNL/get_next_line_bonus.h"
+# include "GNL/get_next_line.h"
 # include "libft/libft.h"
 # include "minilibx/mlx.h" // MLX library
 // # include <GLUT/GLUT.h>
@@ -23,10 +23,11 @@
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 
 # define ERROR_ARGS "Error\nPlease Enter: ./cub3d maps/*.cub\n"
 # define ERROR_MAP_EXT "Invalid Map file extension\nPlease Enter: *.cub"
-# define ERROR_Color "Error\nInvalidColor\n"
+# define ERROR_Color "Invalid Color\n"
 
 # define PI 3.1415926535
 # define PI2 PI / 2
@@ -73,7 +74,7 @@ typedef struct s_data
 void	check_map_ext(char *input_map, t_data *data);
 void	parse_map(t_data *data);
 //Colors
-int		ft_atoi_rgb(char **str);
+int		ft_atoi_rgb(t_data *data, char **str);
 
 // Initialize
 t_data	*init_args(void);

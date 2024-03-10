@@ -42,45 +42,40 @@ void remove_newline(char **str)
         tmp[len - 1] = '\0';
 }
 
-void	get_map_textures(t_data *data)
+void get_map_textures(t_data *data)
 {
-	data->comp.file.line = get_next_line(data->comp.file.fd);
-	while (data->comp.file.line)
-	{
-		remove_newline(&data->comp.file.line);
-		data->comp.file.file_2d = ft_split(data->comp.file.line, ' ');
-		if(!data->comp.file.file_2d || !*data->comp.file.file_2d || data->comp.file.file_2d[0][0] == '\n')
-		{
-			free(data->comp.file.line);
-			data->comp.file.line = get_next_line(data->comp.file.fd);
-			continue ;
-		}
-		if (data->comp.north == NULL && (ft_strncmp(data->comp.file.file_2d[0], "NO",2) == 0))
-			data->comp.north = ft_strdup(data->comp.file.file_2d[1]);
-		else if (data->comp.south == NULL && (ft_strncmp(data->comp.file.file_2d[0], "SO",2)==0))
-			data->comp.south = ft_strdup(data->comp.file.file_2d[1]);
-		else if (data->comp.east == NULL && (ft_strncmp(data->comp.file.file_2d[0], "EA",2)==0))
-			data->comp.east = ft_strdup(data->comp.file.file_2d[1]);
-		else if (data->comp.west == NULL && (ft_strncmp(data->comp.file.file_2d[0], "WE",2)==0))
-			data->comp.west = ft_strdup(data->comp.file.file_2d[1]);
-		else if (!ft_strncmp(data->comp.file.file_2d[0], "C", ft_strlen(data->comp.file.file_2d[0])))
-		{
-				data->comp.ceiling = ft_atoi_rgb(data->comp.file.file_2d+1);
-				printf("Ceiling color = %d\n", data->comp.ceiling);
-		}
-		else if (data->comp.file.file_2d[0][0] == 'F')
-		{
-			print_texture(data);
-			break ;
-		}
-		//else if (!ft_strncmp(data->comp.file.file_2d[0], "NO", ft_strlen(data->comp.file.file_2d[0])))
-		//	data->comp.floor = ft_atoi_rgb(data->comp.file.file_2d[1]);
-		else
-		 	error_handler("Invalid Identifier", data);
-		free(data->comp.file.line);
-		data->comp.file.line = get_next_line(data->comp.file.fd);
-	}
-	free_array(data->comp.file.file_2d);
+    while ((data->comp.file.line = get_next_line(data->comp.file.fd)) != NULL)
+    {
+        remove_newline(&data->comp.file.line);
+        data->comp.file.file_2d = ft_split(data->comp.file.line, ' ');
+        free(data->comp.file.line);
+        if (!data->comp.file.file_2d || !*data->comp.file.file_2d || data->comp.file.file_2d[0][0] == '\0')
+        {
+            free_array(data->comp.file.file_2d);
+            continue;
+        }
+        if (ft_strncmp(data->comp.file.file_2d[0], "NO", 2) == 0 && data->comp.north == NULL)
+            data->comp.north = ft_strdup(data->comp.file.file_2d[1]);
+        else if (ft_strncmp(data->comp.file.file_2d[0], "SO", 2) == 0 && data->comp.south == NULL)
+            data->comp.south = ft_strdup(data->comp.file.file_2d[1]);
+        else if (ft_strncmp(data->comp.file.file_2d[0], "EA", 2) == 0 && data->comp.east == NULL)
+            data->comp.east = ft_strdup(data->comp.file.file_2d[1]);
+        else if (ft_strncmp(data->comp.file.file_2d[0], "WE", 2) == 0 && data->comp.west == NULL)
+            data->comp.west = ft_strdup(data->comp.file.file_2d[1]);
+        else if (ft_strncmp(data->comp.file.file_2d[0], "C", 1) == 0)
+        {
+            data->comp.ceiling = ft_atoi_rgb(data, data->comp.file.file_2d + 1);
+            printf("Ceiling color = %d\n", data->comp.ceiling);
+        }
+        else if (ft_strncmp(data->comp.file.file_2d[0], "F", 1) == 0)
+        {
+            print_texture(data);
+            break;
+        }
+        else
+            error_handler("Invalid Identifier", data);
+        free_array(data->comp.file.file_2d);
+    }
 }
 
 void	parse_map(t_data *data)

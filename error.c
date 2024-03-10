@@ -17,10 +17,15 @@ void	free_array(char **str)
 	int	i;
 
 	i = 0;
-	while (str && str[i])
-		free(str[i++]);
-	if (str)
-		free(str);
+	if(!str)
+		return ;
+	while (str[i])
+	{
+		free(str[i]);
+		str[i] = NULL;
+		i++;
+	}
+	free(str);
 }
 
 void	free_data(t_data *data)
@@ -43,8 +48,8 @@ void	error_handler(char *msg, t_data *data)
 {
 	printf("Error\n");
 	printf("%s\n", msg);
+	free_data(data);
 	if (data->comp.file.fd > 0)
 		close(data->comp.file.fd);
-	free_data(data);
 	exit (1);
 }

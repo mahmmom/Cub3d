@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <fcntl.h>
 
 void	error_args()
 {
@@ -44,9 +45,11 @@ int main(int ac, char **av)
 	if (data.comp.file.fd >= 0)
 		error_handler("Argument cannot be a directory", &data);
 	data.comp.file.fd = open(av[1], O_RDONLY);
+	if(data.comp.file.fd < 0)
+		error_handler("Invalid Map File", &data);
 	check_map_ext(av[1], &data);
 	parse_map(&data);
 	//data = init_args();
-	//free_data(&data);
+	free_data(&data);
 	close(data.comp.file.fd);
 }
