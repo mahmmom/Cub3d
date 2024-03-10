@@ -24,6 +24,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 # define ERROR_ARGS "Error\nPlease Enter: ./cub3d maps/*.cub\n"
 # define ERROR_MAP_EXT "Invalid Map file extension\nPlease Enter: *.cub"
@@ -36,22 +37,31 @@
 
 # define EPSILON 0.0001
 
+typedef struct s_map
+{
+	char	**map_2d;
+	int		map_w;
+	int		map_h;
+	int		p_pos;
+	char	p_dir;
+}	t_map;
+
 typedef struct s_file
 {
 	int		fd;
-	int		line_num;
+	int		l_n;
 	char	*line;
-	char	**file_2d;
+	char	**f_2d;
 }				t_file;
 
 typedef struct s_comp
 {
-	// t_map	map;
+	t_map	map;
 	t_file	file;
-	char	*north;
-	char	*south;
-	char	*west;
-	char	*east;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*es;
 	int		floor;
 	int		ceiling;
 }				t_comp;
@@ -73,6 +83,9 @@ typedef struct s_data
 // Parsing
 void	check_map_ext(char *input_map, t_data *data);
 void	parse_map(t_data *data);
+void	remove_newline(char **str);
+void    get_map(t_data *data);
+int		is_map_char(char *str);
 //Colors
 int		ft_atoi_rgb(t_data *data, char **str);
 
