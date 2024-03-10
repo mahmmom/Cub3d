@@ -33,9 +33,10 @@ void	print_texture(t_data *data)
 
 void remove_newline(char **str)
 {
-    int	len;
+    int		len;
+	char	*tmp;
 	
-	char *tmp = str[0];
+	tmp = str[0];
 	len = ft_strlen(tmp);
     if (len > 0 && tmp[len - 1] == '\n')
         tmp[len - 1] = '\0';
@@ -47,13 +48,7 @@ void	get_map_textures(t_data *data)
 	while (data->comp.file.line)
 	{
 		remove_newline(&data->comp.file.line);
-		//printf("LINE = %s", data->comp.file.line);
-		// if(!data->comp.file.line)
-		// 	return ;
-		//data->comp.file.file_2d = ft_split(data->comp.file.line, '\n');
 		data->comp.file.file_2d = ft_split(data->comp.file.line, ' ');
-		//printf("First = %s|",data->comp.file.file_2d[0]);
-		//printf("Second = %s|",data->comp.file.file_2d[1]);
 		if(!data->comp.file.file_2d || !*data->comp.file.file_2d || data->comp.file.file_2d[0][0] == '\n')
 		{
 			free(data->comp.file.line);
@@ -71,6 +66,7 @@ void	get_map_textures(t_data *data)
 		else if (!ft_strncmp(data->comp.file.file_2d[0], "C", ft_strlen(data->comp.file.file_2d[0])))
 		{
 				data->comp.ceiling = ft_atoi_rgb(data->comp.file.file_2d+1);
+				printf("Ceiling color = %d\n", data->comp.ceiling);
 		}
 		else if (data->comp.file.file_2d[0][0] == 'F')
 		{

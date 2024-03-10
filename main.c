@@ -41,12 +41,12 @@ int main(int ac, char **av)
 	if (ac != 2)
         error_args();
 	data.comp.file.fd = open(av[1], O_DIRECTORY);
-	if (data.comp.file.fd > 0)
+	if (data.comp.file.fd >= 0)
 		error_handler("Argument cannot be a directory", &data);
 	data.comp.file.fd = open(av[1], O_RDONLY);
 	check_map_ext(av[1], &data);
 	parse_map(&data);
 	//data = init_args();
-	free_data(&data);
+	//free_data(&data);
 	close(data.comp.file.fd);
 }

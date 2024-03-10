@@ -26,6 +26,7 @@
 
 # define ERROR_ARGS "Error\nPlease Enter: ./cub3d maps/*.cub\n"
 # define ERROR_MAP_EXT "Invalid Map file extension\nPlease Enter: *.cub"
+# define ERROR_Color "Error\nInvalidColor\n"
 
 # define PI 3.1415926535
 # define PI2 PI / 2

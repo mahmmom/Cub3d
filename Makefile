@@ -9,7 +9,9 @@ OBJS = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = #-framework OpenGL -framework GLUT -Ilibft -fsanitize=address -g3
+CFLAGS = -Ilibft -fsanitize=address -g3
+
+#-framework OpenGL -framework GLUT 
 
 RM = rm -f
 
