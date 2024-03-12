@@ -48,7 +48,6 @@ int is_map_char(char *str)
     int i;
 
     i = 0;
-    printf("str[i] == %c\n", str[i]);
     if (str[i] == '0' || str[i] == '1' || str[i] == 'S'
         || str[i] == 'W' || str[i] == 'E' || str[i] == 'N')
             return (1);

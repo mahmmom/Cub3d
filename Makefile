@@ -5,7 +5,7 @@ endif
 NAME = cub3d
 
 # Add get_next_line.c to the list of source files
-SRC =	main.c parsing.c init.c error.c utils.c\
+SRC =	main.c parsing.c init.c error.c utils.c map_parse.c\
 		GNL/get_next_line.c GNL/get_next_line_utils.c \
 #SRC = Walls_Ceiling_Floor.c
 # Update object files to include get_next_line.o

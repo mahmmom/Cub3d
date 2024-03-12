@@ -53,6 +53,6 @@ int main(int ac, char **av)
 	check_map_ext(av[1], &data);
 	parse_map(&data);
 	//data = init_args();
-	free_data(&data);
+	//free_data(&data);
 	close(data.comp.file.fd);
 }

@@ -30,18 +30,18 @@ void	free_array(char **str)
 
 void	free_data(t_data *data)
 {
-	free_array(data->comp.file.file_2d);
+	free_array(data->comp.file.f_2d);
 	//cu_free_2d(data->comp.map.map_2d);
 	if (data->comp.file.line)
 		free(data->comp.file.line);
-	if (data->comp.north)
-		free(data->comp.north);
-	if (data->comp.south)
-		free(data->comp.south);
-	if (data->comp.west)
-		free(data->comp.west);
-	if (data->comp.east)
-		free(data->comp.east);
+	if (data->comp.no)
+		free(data->comp.no);
+	if (data->comp.so)
+		free(data->comp.so);
+	if (data->comp.we)
+		free(data->comp.we);
+	if (data->comp.es)
+		free(data->comp.es);
 }
 
 void	error_handler(char *msg, t_data *data)
