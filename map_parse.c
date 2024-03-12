@@ -63,7 +63,7 @@ void get_map(t_data *data)
                 return;
             }
             temp_map[++i] = ft_strdup(data->comp.file.line);
-            // printf("Line = [%s]\n", temp_map[i]);
+            printf("Line = [%s]\n", temp_map[i]);
             free(data->comp.file.line);
         }
         else
