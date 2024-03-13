@@ -13,7 +13,7 @@ OBJS = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft #-fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -Ilibft -g3 #-fsanitize=address -g3
 
 #-framework OpenGL -framework GLUT 
 

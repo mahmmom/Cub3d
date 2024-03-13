@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wahmed <wahmed@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 17:55:17 by wahmed            #+#    #+#             */
-/*   Updated: 2024/01/30 16:16:00 by wahmed           ###   ########.fr       */
+/*   Updated: 2024/03/13 21:39:39 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <sys/fcntl.h>
 
 char	*ft_read(int fd, char *str)
 {
@@ -105,4 +106,3 @@ char	*get_next_line(int fd)
 	buffer = ft_skip(buffer);
 	return (line);
 }
-

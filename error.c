@@ -6,7 +6,7 @@
 /*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:26:36 by mohamoha          #+#    #+#             */
-/*   Updated: 2024/03/08 19:09:12 by mohamoha         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:45:25 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	free_array(char **str)
 
 void	free_data(t_data *data)
 {
-	free_array(data->comp.file.f_2d);
+	//free_array(data->comp.file.f_2d);
 	//cu_free_2d(data->comp.map.map_2d);
-	if (data->comp.file.line)
-		free(data->comp.file.line);
+	// if (data->comp.file.line)
+	// 	free(data->comp.file.line);
 	if (data->comp.no)
 		free(data->comp.no);
 	if (data->comp.so)

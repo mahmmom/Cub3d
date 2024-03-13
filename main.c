@@ -6,11 +6,12 @@
 /*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:28:18 by mohamoha          #+#    #+#             */
-/*   Updated: 2024/03/08 19:03:36 by mohamoha         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:58:27 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdlib.h>
 
 void	error_args()
 {
@@ -53,6 +54,6 @@ int main(int ac, char **av)
 	check_map_ext(av[1], &data);
 	parse_map(&data);
 	//data = init_args();
-	//free_data(&data);
+	free_data(&data);
 	close(data.comp.file.fd);
 }

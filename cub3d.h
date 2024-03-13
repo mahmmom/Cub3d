@@ -6,7 +6,7 @@
 /*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:28:23 by mohamoha          #+#    #+#             */
-/*   Updated: 2024/03/08 18:57:15 by mohamoha         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:28:33 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	check_map_ext(char *input_map, t_data *data);
 void	parse_map(t_data *data);
 void	remove_newline(char **str);
 void    get_map(t_data *data);
-int		is_map_char(char *str);
+int is_map_char(char **str);
 //Colors
 int		ft_atoi_rgb(t_data *data, char **str);
 
