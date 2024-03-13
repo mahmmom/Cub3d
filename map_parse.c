@@ -70,8 +70,6 @@ void get_map(t_data *data)
         free_array(data->comp.file.f_2d);
         data->comp.file.line = get_next_line(data->comp.file.fd);
     }
-	if (check_doubles(data) == 0)
-		error_handler("player position is doubled", data);
     temp_map[i] = NULL;
     data->comp.map.map_2d = temp_map;
 	//print_array(data->comp.map.map_2d);
