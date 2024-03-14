@@ -6,7 +6,7 @@
 /*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:28:23 by mohamoha          #+#    #+#             */
-/*   Updated: 2024/03/13 22:28:33 by mohamoha         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:13:42 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,11 @@ typedef struct s_comp
 
 typedef struct s_data
 {
+	char	**temp_map;		// temp map to read from
 	char	**map2d; 		// the map
 	char	**texture;      // the map texture
 	char	**color;		// the map color
+	char	*input_map;		// the map from user
 	int		p_x;     		// player x position in the map
 	int		p_y;     	    // player y position in the map
 	int		w_map;    		// map width
@@ -81,11 +83,12 @@ typedef struct s_data
 
 
 // Parsing
-void	check_map_ext(char *input_map, t_data *data);
+void	check_map_ext(char *input, t_data *data);
 void	parse_map(t_data *data);
 void	remove_newline(char **str);
 void    get_map(t_data *data);
-int is_map_char(char **str);
+int		is_map_char(char **str);
+void    *ft_realloc(void *ptr, size_t old_size, size_t new_size);
 //Colors
 int		ft_atoi_rgb(t_data *data, char **str);
 
@@ -96,5 +99,8 @@ t_data	*init_args(void);
 void	error_handler(char *msg, t_data *data);
 void	free_data(t_data *data);
 void	free_array(char **str);
+
+
+void    print_array(char **str);
 
 #endif

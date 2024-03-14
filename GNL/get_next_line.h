@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wahmed <wahmed@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 14:54:56 by wahmed            #+#    #+#             */
-/*   Updated: 2023/08/08 13:22:34 by wahmed           ###   ########.fr       */
+/*   Updated: 2024/03/14 15:58:44 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1
 # endif
 
 size_t		ft_strlen(const char *s);

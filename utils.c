@@ -85,3 +85,4 @@ int ft_atoi_rgb(t_data *data, char **str)
     free_array(temp); // Free memory allocated for temp
     return (result);
 }
+
