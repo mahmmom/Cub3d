@@ -26,38 +26,49 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-# define ERROR_ARGS "Error\nPlease Enter: ./cub3d maps/*.cub\n"
-# define ERROR_MAP_EXT "Invalid Map file extension\nPlease Enter: *.cub"
-# define ERROR_Color "Invalid Color\n"
-
 # define PI 3.1415926535
 # define PI2 PI / 2
 # define PI3 3 * PI / 2
 # define DR 0.0174533 // 1 Degree to RAD
-
 # define EPSILON 0.0001
+
+# define 	E_ARG "Please Enter: <./cub3d> <maps/*.cub>"
+# define 	E_MAP_EXT "Invalid Map file extension\nPlease Enter: *.cub"
+# define	E_MAP "Invalid Map"
+# define	E_TEXT "Invalid Texture input"
+# define	E_TEXT_PATH "Texture Path doesn't exist"
+# define 	E_COLOR "Invalid Color"
+# define	E_INPUT "Invalid Input"
+# define	E_MALLOC "Malloc Fail"
+# define	E_OPEN "Cant open file"
+# define	E_INVALID "Invalid Error type"
+# define	E_DUPLICATE "Duplicate Map Element"
+
+
+typedef enum e_error
+{
+	CORRECT,
+	ARG_ERR,
+	MAP_EXT_ERR,
+	MAP_ERR,
+	MAP_CHAR_ERR,
+	TEXT_ERR,
+	TEXT_PATH_ERR,
+	COLOR_ERR,
+	MALLOC_ERR,
+	OPEN_ERR,
+	DUP_ERR,
+}						t_error;
 
 typedef struct s_map
 {
-	char	**map_2d;
-	int		map_w;
-	int		map_h;
-	int		p_pos;
-	char	p_dir;
-}	t_map;
-
-typedef struct s_file
-{
-	int		fd;
-	int		l_n;
-	char	*line;
-	char	**f_2d;
-}				t_file;
+	int					height;
+	int					width;
+	char				**map_data;
+}						t_map;
 
 typedef struct s_comp
 {
-	t_map	map;
-	t_file	file;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -68,39 +79,46 @@ typedef struct s_comp
 
 typedef struct s_data
 {
-	char	**temp_map;		// temp map to read from
-	char	**map2d; 		// the map
-	char	**texture;      // the map texture
-	char	**color;		// the map color
-	char	*input_map;		// the map from user
-	int		p_x;     		// player x position in the map
-	int		p_y;     	    // player y position in the map
-	int		w_map;    		// map width
-	int		h_map;    		// map height
-	int		fd;
+	t_map	map;
 	t_comp	comp;
 }		t_data;
 
 
 // Parsing
-void	check_map_ext(char *input, t_data *data);
-void	parse_map(t_data *data);
+int		validate_map(t_data *data, char *file_name);
+int		check_map_ext(char *input);
+int		parse_map(t_data *data, char *file_name);
 void	remove_newline(char **str);
-void    get_map(t_data *data);
+int		all_comp_found(t_data *data);
+void    comp_error(t_data *data);
+
+//Texture
+int		texture_path(char *path);
+int		array_size(char **str);
+int		comp_exist(char **array, char *str);
+
+//Map
+void    get_map(t_data *data, int fd);
 int		is_map_char(char **str);
 void    *ft_realloc(void *ptr, size_t old_size, size_t new_size);
+
 //Colors
-int		ft_atoi_rgb(t_data *data, char **str);
+int		ft_atoi_rgb(char **str);
+int		count_commas(char **str);
 
 // Initialize
 t_data	*init_args(void);
 
 // Error handler
-void	error_handler(char *msg, t_data *data);
-void	free_data(t_data *data);
+void	error_exit(enum e_error	value);
+void	print_error(char *msg);
+
+//Free
+void	clean_exit(t_data *data);
 void	free_array(char **str);
+void	free_ptr(void **ptr);
 
-
+//Print Array
 void    print_array(char **str);
 
 #endif

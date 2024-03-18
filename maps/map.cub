@@ -1,12 +1,14 @@
 
                                         NO ./textures/Wadha.xpm
-  SO ./Black_Hole.xpm
+  SO ./textures/Black_Hole.xpm
 
 
 
-                         WE ./path_to_the_west_texture
+                         WE ./textures/Mohamed.xpm
 
-EA ./path_to_the_east_texturegfhfh
+  EA ./textures/Sky.xpm
+
+  NO ./textures/Black_Hole2.xpm
 
 
 
@@ -33,5 +35,4 @@ F 220,100,0
 11000001110101011111011110N0111
 11110111 1110101 101111010001
 11111111 1111111 111111111111
-
 

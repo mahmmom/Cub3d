@@ -5,7 +5,7 @@ endif
 NAME = cub3d
 
 # Add get_next_line.c to the list of source files
-SRC =	main.c parsing.c init.c error.c utils.c map_parse.c\
+SRC =	main.c parsing.c init.c error.c color.c map_parse.c parsing_utils.c parsing_utils2.c\
 		GNL/get_next_line.c GNL/get_next_line_utils.c \
 #SRC = Walls_Ceiling_Floor.c
 # Update object files to include get_next_line.o
@@ -13,7 +13,7 @@ OBJS = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft -g3 #-fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -Ilibft -g3 #-fsanitize=address
 
 #-framework OpenGL -framework GLUT 
 

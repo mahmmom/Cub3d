@@ -12,16 +12,15 @@
 
 #include "cub3d.h"
 
-void	check_map_ext(char *input, t_data *data)
+int	check_map_ext(char *input)
 {
 	if (ft_strchr(input, '.') != NULL)
 	{
 		input = ft_strchr(input, '.');
 		while (!(ft_strncmp(input, ".cub", ft_strlen(input - 4)) == 0))
-			error_handler(ERROR_MAP_EXT, data);
+			return (error_exit(MAP_EXT_ERR), MAP_EXT_ERR);
 	}
-	if (data->comp.file.fd < 0)
-		error_handler("Invalid Map File", data);
+	return (CORRECT);
 }
 
 void	print_texture(t_data *data)
@@ -32,142 +31,136 @@ void	print_texture(t_data *data)
 	printf("West = %s\n", data->comp.we);
 }
 
-void	remove_newline(char **str)
+int	check_color(t_data *data, char **array, char *text)
 {
-	int		len;
-	char	*tmp;
-
-	tmp = str[0];
-	len = ft_strlen(tmp);
-	if (len > 0 && tmp[len - 1] == '\n')
-		tmp[len - 1] = '\0';
-}
-
-// void	remove_newline(char **str)
-// {
-// 	char *new_l;
-// 	if(str == NULL || *str == NULL)
-// 		return ;
-// 	new_l = ft_strchr(*str,'\n');
-// 	if(new_l != NULL)
-// 		*new_l = '\0';
-// }
-
-int	is_map_char(char **str)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (str[i])
-	{
-		j = 0;
-		while (str[i][j] != '\0')
-		{
-			if (str[i][j] != 'N' && str[i][j] != 'S' && str[i][j] != 'E'
-				&& str[i][j] != 'W' && str[i][j] != '0' && str[i][j] != '1')
-			{
-				return (0);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	check_texture(t_data *data)
-{
-	if ((ft_strncmp(data->comp.file.f_2d[0], "NO", 2) == 0) && !data->comp.no
-		&& data->comp.file.f_2d[1] && !data->comp.file.f_2d[2])
-		data->comp.no = ft_strdup(data->comp.file.f_2d[1]);
-	else if ((ft_strncmp(data->comp.file.f_2d[0], "SO", 2) == 0)
-		&& !data->comp.so && data->comp.file.f_2d[1]
-		&& !data->comp.file.f_2d[2])
-		data->comp.so = ft_strdup(data->comp.file.f_2d[1]);
-	else if (ft_strncmp(data->comp.file.f_2d[0], "EA", 2) == 0 && !data->comp.es
-		&& data->comp.file.f_2d[1] && !data->comp.file.f_2d[2])
-		data->comp.es = ft_strdup(data->comp.file.f_2d[1]);
-	else if (ft_strncmp(data->comp.file.f_2d[0], "WE", 2) == 0 && !data->comp.we
-		&& data->comp.file.f_2d[1] && !data->comp.file.f_2d[2])
-		data->comp.we = ft_strdup(data->comp.file.f_2d[1]);
-	else if (data->comp.ceiling == -1 && ft_strncmp(data->comp.file.f_2d[0],
-			"C", 1) == 0)
-		data->comp.ceiling = ft_atoi_rgb(data, data->comp.file.f_2d + 1);
-	else if (data->comp.floor == -1 && ft_strncmp(data->comp.file.f_2d[0], "F",
-			1) == 0)
-		data->comp.floor = ft_atoi_rgb(data, data->comp.file.f_2d + 1);
+	if (count_commas(array) != 2)
+		return (free(array), error_exit(COLOR_ERR), COLOR_ERR);
+	if (data->comp.ceiling == -1 && ft_strncmp(array[0], text, 1) == 0)
+		data->comp.ceiling = ft_atoi_rgb(array + 1);
+	else if (data->comp.floor == -1 && ft_strncmp(array[0], text, 1) == 0)
+		data->comp.floor = ft_atoi_rgb(array + 1);
 	else
-		return (1);
-	return (0);
+		return (free(array), error_exit(COLOR_ERR), COLOR_ERR);
+	return (CORRECT);
 }
 
-void	get_map_textures(t_data *data)
+int check_texture(t_data *data, char **array, char *text)
 {
-	// check if map is empty, need to make function
-	// if(data->comp.file.line == NULL)
-	// 	printf("Error\nMap is Empty\n");
-	while ((data->comp.file.line = get_next_line(data->comp.file.fd)) != NULL)
+    if (array_size(array) != 2)
 	{
-		remove_newline(&data->comp.file.line);
-		data->comp.file.f_2d = ft_split(data->comp.file.line, ' ');
-		// free(data->comp.file.line);
-		if (!data->comp.file.f_2d || !*data->comp.file.f_2d
-			|| data->comp.file.f_2d[0][0] == '\0')
-		{
-			free_array(data->comp.file.f_2d);
-			continue ;
-		}
-		if (check_texture(data) == 1)
-		{
-			if (is_map_char(data->comp.file.f_2d) == 1)
-			{
-				print_texture(data);
-				free_array(data->comp.file.f_2d);
-				// free(data->comp.file.line);
-				break ;
-			}
-			else
-				error_handler("Invalid Identifier", data);
-		}
-		free_array(data->comp.file.f_2d);
-	}
-	// printf("last line = [%s]\n", data->comp.file.line);
-}
-
-void	ft_array(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while ((data->comp.file.line = get_next_line(data->comp.file.fd)) != NULL)
+        free_array(array);
+        return (error_exit(TEXT_ERR), TEXT_ERR);
+    }
+    if (texture_path(array[1]) == 0)
 	{
-		data->temp_map = (char **)ft_realloc(data->temp_map, i * sizeof(char *),
-				(i + 2) * sizeof(char *));
-		if (data->temp_map == NULL)
-		{
-            error_handler("Memory allocation failed", data);
-            return;
-		}
-		data->temp_map[i] = ft_strdup(data->comp.file.line);
-		free(data->comp.file.line);
-		i++;
+        free_array(array);
+        return (error_exit(TEXT_ERR), TEXT_ERR);
+    }
+    if ((ft_strncmp(array[0], text, 2) == 0) && data->comp.no == NULL)
+        data->comp.no = ft_strdup(array[1]);
+    else if ((ft_strncmp(array[0], text, 2) == 0) && data->comp.so == NULL)
+        data->comp.so = ft_strdup(array[1]);
+    else if ((ft_strncmp(array[0], text, 2) == 0) && data->comp.we == NULL)
+        data->comp.we = ft_strdup(array[1]);
+    else if ((ft_strncmp(array[0], text, 2) == 0) && data->comp.es == NULL)
+        data->comp.es = ft_strdup(array[1]);
+	else
+	{
+		free_array(array);
+		return (error_exit(DUP_ERR), DUP_ERR);
 	}
-	free(data->comp.file.line);
-	printf("I = %d\n", i);
-	data->temp_map[i+1] = NULL;
+	//print_texture(data);
+    free_array(array);
+    return (CORRECT);
 }
 
-void	parse_map(t_data *data)
+int	open_file(char	*file_name)
 {
-	data->comp.file.fd = open(data->input_map, O_DIRECTORY);
-	if (data->comp.file.fd >= 0)
-		error_handler("Argument cannot be a directory", data);
-	data->comp.file.fd = open(data->input_map, O_RDONLY);
-	check_map_ext(data->input_map, data);
-	ft_array(data);
-	//print_array(data->temp_map);
-	//get_map_textures(data);
-	// get_map(data);
-	close(data->comp.file.fd);
+	int	temp;
+
+	temp = open(file_name, O_DIRECTORY);
+	if (temp >= 0)
+		return (error_exit(OPEN_ERR), -1);
+	temp = open(file_name, O_RDONLY);
+	if (temp < 0)
+		return (error_exit(OPEN_ERR), -1);
+	//check if it's correct in this location or move to another func
+	if (check_map_ext(file_name) == 1)
+		return (-1);
+	return (temp);
+}
+
+static int	parse_line(t_data *data, char *map_line)
+{
+	char	**array;
+
+	array = ft_split(map_line, ' ');
+	if (comp_exist(array, "NO"))
+		return (check_texture(data, array, "NO"));
+	else if (comp_exist(array, "SO"))
+		return (check_texture(data, array, "SO"));
+	else if (comp_exist(array, "WE"))
+		return (check_texture(data, array, "WE"));
+	else if (comp_exist(array, "EA"))
+		return (check_texture(data, array, "EA"));
+	else if (comp_exist(array, "F"))
+		return (check_color(data, array, "F"));
+	else if (comp_exist(array, "C"))
+		return (check_color(data, array, "C"));
+	else
+	{
+		free_array(array);
+		return (error_exit(MAP_ERR), MAP_ERR);
+	}
+	return (CORRECT);
+}
+
+int parse_map(t_data *data, char *file_name)
+{
+    int fd;
+    char *line;
+    char *map_line;
+
+    fd = open_file(file_name);
+    if (fd == -1)
+        return (error_exit(OPEN_ERR), OPEN_ERR);
+    line = get_next_line(fd);
+    while (line)
+	{
+		//printf("Line = [%s]\n", line);
+        map_line = ft_strtrim(line, " \t\v\f\r\n");
+        free(line);
+        if (*map_line && parse_line(data, map_line) != CORRECT)
+		{
+            free(map_line);
+            return (close(fd), MAP_ERR);
+        }
+        free(map_line);
+        if (all_comp_found(data) == 1)
+		{
+			break;
+		}
+        line = get_next_line(fd);
+    }
+    if (!all_comp_found(data))
+	{
+		printf("!all comp\n");
+		return (close(fd), comp_error(data), MAP_ERR);
+	}
+    //get_map(data, fd);
+    return (close(fd), CORRECT);
+}
+
+int	validate_map(t_data *data, char *file_name)
+{
+	int		status;
+
+	status = parse_map(data, file_name);
+	if (status != CORRECT)
+	{
+		// error_exit(MAP_ERR);
+		clean_exit(data);
+	}
+
+	return (CORRECT);
 }
