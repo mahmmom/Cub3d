@@ -1,3 +1,4 @@
+F 220, 10,0
 
                                         NO ./textures/Wadha.xpm
   SO ./textures/Black_Hole.xpm
@@ -6,18 +7,12 @@
 
                          WE ./textures/Mohamed.xpm
 
-  EA ./textures/Sky.xpm
-
-  NO ./textures/Black_Hole2.xpm
+  EA ./textures/Sky.xpm	
 
 
 
-
-C 225,255,255
+C 225    ,    255    ,    100
      
-
-F 220,100,0
-
 
 
 

@@ -6,7 +6,7 @@
 /*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:26:36 by mohamoha          #+#    #+#             */
-/*   Updated: 2024/03/14 15:47:44 by mohamoha         ###   ########.fr       */
+/*   Updated: 2024/03/19 00:18:28 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	error_exit(enum e_error	value)
 {
 	if (value == ARG_ERR)
 		return (print_error(E_ARG));
-	else if (value == MAP_ERR)
+	else if (value == MAP_EXT_ERR)
 		return (print_error(E_MAP_EXT));
 	else if (value == TEXT_ERR)
 		return (print_error(E_TEXT));
@@ -65,6 +65,8 @@ void	error_exit(enum e_error	value)
 		return (print_error(E_MALLOC));
 	else if (value == OPEN_ERR)
 		return (print_error(E_OPEN));
+	else if (value == MAP_ERR)
+		return (print_error(E_MAP));
 	else if (value == DUP_ERR)
 		return (print_error(E_DUPLICATE));
 	else

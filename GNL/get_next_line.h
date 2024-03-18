@@ -6,27 +6,29 @@
 /*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 14:54:56 by wahmed            #+#    #+#             */
-/*   Updated: 2024/03/14 15:58:44 by mohamoha         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:49:14 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
-# include <stdlib.h>
-# include <unistd.h>
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif
 
-size_t		ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
-char	*ft_str_init(void);
-char	*ft_strjoin_mod(char *s1, char *s2);
-char	*ft_read(int fd, char *str);
-char	*ft_skip(char *str);
-char	*ft_line(char *str);
+# include<unistd.h>
+# include<string.h>
+# include<stdlib.h>
+# include"../libft/libft.h"
+
 char	*get_next_line(int fd);
+int		len(char *s);
+t_list	*lst_new(char *content);
+char	*join(char *s1, char *s2);
+void	add_front(t_list **lst, t_list *neww);
+void	add_back(t_list **lst, char *content);
+char	*read_lst(t_list **lst);
+char	*cut(char *s, unsigned int start, size_t len);
+int		line_len(char *s);
 
 #endif

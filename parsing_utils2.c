@@ -22,3 +22,15 @@ void    comp_error(t_data *data)
         printf("Missing Color\n");
     }
 }
+
+void    print_array(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		printf("%s\n", str[i]);
+		i++;
+	}
+}

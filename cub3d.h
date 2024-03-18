@@ -6,7 +6,7 @@
 /*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:28:23 by mohamoha          #+#    #+#             */
-/*   Updated: 2024/03/14 18:13:42 by mohamoha         ###   ########.fr       */
+/*   Updated: 2024/03/19 00:10:08 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define	E_MAP "Invalid Map"
 # define	E_TEXT "Invalid Texture input"
 # define	E_TEXT_PATH "Texture Path doesn't exist"
-# define 	E_COLOR "Invalid Color"
+# define 	E_COLOR "Invalid Color value should be 0 <= color <= 255"
 # define	E_INPUT "Invalid Input"
 # define	E_MALLOC "Malloc Fail"
 # define	E_OPEN "Cant open file"
@@ -103,8 +103,8 @@ int		is_map_char(char **str);
 void    *ft_realloc(void *ptr, size_t old_size, size_t new_size);
 
 //Colors
-int		ft_atoi_rgb(char **str);
-int		count_commas(char **str);
+int		check_color(t_data *data, char **array, char *text);
+int		count_commas(char *str);
 
 // Initialize
 t_data	*init_args(void);

@@ -6,103 +6,117 @@
 /*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 17:55:17 by wahmed            #+#    #+#             */
-/*   Updated: 2024/03/13 21:39:39 by mohamoha         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:48:34 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <sys/fcntl.h>
 
-char	*ft_read(int fd, char *str)
+t_list	*lst_new(char *content)
 {
-	char	*buff;
-	int		len;
+	t_list	*new_node;
 
-	buff = malloc((size_t)BUFFER_SIZE + 2 * (sizeof(char)));
-	if (!buff)
+	new_node = (t_list *) malloc(sizeof(t_list) * 1);
+	if (!new_node)
 		return (NULL);
-	len = 1;
-	while (!ft_strchr(str, '\n') && (len != 0))
+	new_node->content = content;
+	new_node->next = NULL;
+	return (new_node);
+}
+
+void	add_back(t_list **lst, char *content)
+{
+	t_list	*tmp;
+	t_list	*new_node;
+
+	if (!content)
+		return ;
+	new_node = lst_new(content);
+	if (!*lst)
 	{
-		len = read(fd, buff, BUFFER_SIZE);
-		if (len == -1)
+		*lst = new_node;
+		return ;
+	}
+	tmp = *lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new_node;
+}
+
+int	ft_ahmed(char *s1, char *s2, size_t n)
+{
+	size_t			i;
+	unsigned char	*a;
+	unsigned char	*b;
+
+	i = 0;
+	a = (unsigned char *)s1;
+	b = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	while (i <= n && a[i] == b[i] && a[i] != '\0' && b[i] != '\0')
+	{
+		if (i == n - 1)
 		{
-			free(buff);
-			free(str);
-			return (NULL);
+			return (0);
 		}
-		buff[len] = '\0';
-		str = ft_strjoin_mod(str, buff);
+		i++;
 	}
-	free(buff);
-	return (str);
+	return (a[i] - b[i]);
 }
 
-char	*ft_skip(char *old_buffer)
+char	*read_lst(t_list **lst)
 {
-	int		i;
-	int		j;
-	char	*new_buffer;
+	char	*result;
+	t_list	*node;
+	char	*tmp;
 
-	i = 0;
-	while (old_buffer[i] != '\0' && old_buffer[i] != '\n')
-		i++;
-	if (old_buffer[i] == '\0')
+	if (!*lst)
+		return (NULL);
+	if (ft_ahmed((*lst)->content, "\0", \
+		len((*lst)->content)) == 0 && (*lst)->next == NULL)
+		return (free((*lst)->content), free(*lst), NULL);
+	result = NULL;
+	while ((*lst) != NULL)
 	{
-		free(old_buffer);
-		return (NULL);
+		node = (*lst);
+		tmp = node->content;
+		if (line_len(tmp) != -1)
+		{
+			result = join(result, cut(tmp, 0, line_len(tmp)));
+			(*lst) = (*lst)->next;
+			return (free(tmp), free(node), result);
+		}
+		result = join(result, tmp);
+		(*lst) = (*lst)->next;
+		free(node);
 	}
-	new_buffer = malloc(sizeof(char) * (ft_strlen(old_buffer) - i + 1));
-	if (new_buffer == NULL)
-		return (NULL);
-	i++;
-	j = 0;
-	while (old_buffer[i] != '\0')
-		new_buffer[j++] = old_buffer[i++];
-	new_buffer[j] = '\0';
-	free(old_buffer);
-	return (new_buffer);
-}
-
-char	*ft_line(char *str)
-{
-	int		i;
-	char	*line_new;
-
-	i = 0;
-	if (!str[i])
-		return (NULL);
-	while (str[i] && str[i] != '\n')
-		i++;
-	line_new = (char *)malloc(sizeof(char) * (i + 2));
-	if (!line_new)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '\n')
-	{
-		line_new[i] = str[i];
-		i++;
-	}
-	if (str[i] == '\n')
-	{
-		line_new[i] = str[i];
-		i++;
-	}
-	line_new[i] = '\0';
-	return (line_new);
+	return (result);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*line;
-	static char	*buffer;
+	char			*buf;
+	static t_list	*list;
+	int				read_return;
+	int				line_detect;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > 2147483647)
-		return (0);
-	buffer = ft_read(fd, buffer);
-	if (!buffer)
+	if (BUFFER_SIZE < 1 || fd < 0 || fd > 10240 || BUFFER_SIZE > 2147483647)
 		return (NULL);
-	line = ft_line(buffer);
-	buffer = ft_skip(buffer);
-	return (line);
+	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	read_return = read(fd, buf, BUFFER_SIZE);
+	if (read_return == -1)
+		return (free(buf), NULL);
+	buf[read_return] = '\0';
+	line_detect = line_len(buf);
+	while (read_return > 0)
+	{
+		add_back(&list, cut(buf, 0, read_return));
+		if (line_detect != -1)
+			return (free(buf), read_lst(&list));
+		read_return = read(fd, buf, BUFFER_SIZE);
+		buf[read_return] = '\0';
+		line_detect = line_len(buf);
+	}
+	return (free(buf), read_lst(&list));
 }

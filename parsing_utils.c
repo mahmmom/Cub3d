@@ -40,16 +40,16 @@ int	comp_exist(char **array, char *str)
 	return (0);
 }
 
-int	count_commas(char **str)
+int	count_commas(char *str)
 {
 	int	i;
 	int	commas_count;
 
 	i = 0;
 	commas_count = 0;
-	while (str[0][i])
+	while (str[i])
 	{
-		if (str[0][i] == ',')
+		if (str[i] == ',')
 			commas_count++;
 		i++;
 	}
