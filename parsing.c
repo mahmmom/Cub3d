@@ -6,7 +6,7 @@
 /*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:50:34 by mohamoha          #+#    #+#             */
-/*   Updated: 2024/03/20 22:45:01 by mohamoha         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:59:06 by mohamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,13 @@ int	open_file(char *file_name)
 	int	temp;
 
 	if (check_map_ext(file_name) != CORRECT)
-		return (error_exit(MAP_EXT_ERR), MAP_EXT_ERR);
-	// check if it's correct in this location or move to another func
+		return (error_exit(MAP_EXT_ERR), -1);
 	temp = open(file_name, O_DIRECTORY);
 	if (temp >= 0)
-		return (error_exit(OPEN_ERR), OPEN_ERR);
+		return (error_exit(OPEN_ERR), -1);
 	temp = open(file_name, O_RDONLY);
 	if (temp < 0)
-		return (error_exit(OPEN_ERR), OPEN_ERR);
-	printf("FD = %d\n", temp);
+		return (error_exit(OPEN_ERR), -1);
 	return (temp);
 }
 
@@ -111,7 +109,7 @@ int	parse_map(t_data *data, char *file_name)
 	char	*map_line;
 
 	fd = open_file(file_name);
-	if (fd == OPEN_ERR || fd == MAP_EXT_ERR)
+	if (fd == -1)
 		return (OPEN_ERR);
 	line = get_next_line(fd);
 	if (!line)
@@ -121,20 +119,13 @@ int	parse_map(t_data *data, char *file_name)
 		map_line = ft_strtrim(line, " \t\v\f\r\n");
 		free(line);
 		if (*map_line && parse_line(data, map_line) != CORRECT)
-		{
-			printf("are we here\n");
-			free(map_line);
-			return (close(fd), MAP_ERR);
-		}
+			return (free(map_line), close(fd), MAP_ERR);
 		free(map_line);
 		if (all_comp_found(data) == 1)
-			{
-				//print_texture(data);
 				break ;
-			}
 		line = get_next_line(fd);
 	}
-	if(get_map(data, fd) != CORRECT)
-		return (close(fd), MAP_ERR);
+	// if(get_map(data, fd) != CORRECT)
+	// 	return (close(fd), MAP_ERR);
 	return (close(fd), CORRECT);
 }

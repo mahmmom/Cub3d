@@ -11,7 +11,7 @@ OBJS = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Ilibft -g3 #-fsanitize=address
 
 RM = rm -f
 
@@ -28,7 +28,7 @@ libft/libft.a:
 
 clean:
 	$(RM) $(OBJS)
-
+	make -C libft clean
 fclean: clean
 	$(RM) $(NAME)
 	make -C libft fclean
