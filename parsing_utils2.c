@@ -30,7 +30,7 @@ void    print_array(char **str)
 	i = 0;
 	while (str[i])
 	{
-		printf("%s\n", str[i]);
+		printf("Array [%i] = %s\n", i, str[i]);
 		i++;
 	}
 }

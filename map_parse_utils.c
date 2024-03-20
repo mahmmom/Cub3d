@@ -1,10 +1,15 @@
 #include "cub3d.h"
 
-int all_map_comp(t_data *data)
-{
+// int all_map_comp(t_data *data)
+// {
 
-}
+// }
 
+
+// int map_comp(t_data *data, char *line)
+// {
+
+// }
 
 int	is_empty_line(char *line)
 {

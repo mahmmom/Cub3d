@@ -98,7 +98,7 @@ char	*parse_color_line(char **array)
 	return (color);
 }
 
-int	check_color(t_data *data, char **array, char *text)
+int	check_color(t_data *data, char **array)
 {
 	char	**temp;
 	char	*trim;
@@ -114,10 +114,12 @@ int	check_color(t_data *data, char **array, char *text)
 		return (free_array(array), free_array(temp), error_exit(COLOR_ERR), COLOR_ERR);
 	if (check_args(temp) == 0)
 		return (free_array(array), free_array(temp), error_exit(COLOR_ERR), COLOR_ERR);
-	if (data->comp.ceiling == -1 && ft_strncmp(array[0], text, 1) == 0)
+	if (data->comp.ceiling == -1 && ft_strncmp(array[0], "C", 1) == 0)
 		data->comp.ceiling = convert_to_integer(temp);
-	else if (data->comp.floor == -1 && ft_strncmp(array[0], text, 1) == 0)
+	else if (data->comp.floor == -1 && ft_strncmp(array[0], "F", 1) == 0)
 		data->comp.floor = convert_to_integer(temp);
+	else
+	 	return (free_array(temp), free_array(array), error_exit(DUP_ERR), DUP_ERR);
 	if (data->comp.ceiling == -2 || data->comp.floor == -2)
 		return (free_array(temp), free_array(array), error_exit(COLOR_ERR), COLOR_ERR);
 	return (free_array(temp), free_array(array), CORRECT);

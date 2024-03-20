@@ -4,30 +4,26 @@ endif
 
 NAME = cub3d
 
-# Add get_next_line.c to the list of source files
-SRC =	main.c parsing.c init.c error.c color.c map_parse.c parsing_utils.c parsing_utils2.c\
+SRC =	main.c init.c error.c parsing.c color.c parsing_utils.c parsing_utils2.c map_parse.c map_parse_utils.c\
 		GNL/get_next_line.c GNL/get_next_line_utils.c \
-#SRC = Walls_Ceiling_Floor.c
-# Update object files to include get_next_line.o
+
 OBJS = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft -g3 #-fsanitize=address
-
-#-framework OpenGL -framework GLUT 
+CFLAGS = -Wall -Wextra -Werror -Ilibft -g3 -fsanitize=address
 
 RM = rm -f
 
 all: $(NAME)
 
-$(NAME): $(OBJS) | libft
-	$(CC) $(OBJS) -Llibft -lft $(CFLAGS) -o $(NAME)
+$(NAME): $(OBJS) libft/libft.a
+	$(CC) $(OBJS) $(CFLAGS) -Llibft -lft -o $(NAME)
 
-%.o: %.c
+%.o: %.c libft/libft.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-libft:
+libft/libft.a:
 	make -C libft
 
 clean:
@@ -39,4 +35,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re libft/libft.a

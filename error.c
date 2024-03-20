@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohamoha <mohamoha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wahmed <wahmed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 11:26:36 by mohamoha          #+#    #+#             */
-/*   Updated: 2024/03/19 00:18:28 by mohamoha         ###   ########.fr       */
+/*   Created: 2024/03/08 11:26:36 by wahmed          #+#    #+#             */
+/*   Updated: 2024/03/20 16:13:43 by wahmed        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	error_exit(enum e_error	value)
 		return (print_error(E_MAP));
 	else if (value == DUP_ERR)
 		return (print_error(E_DUPLICATE));
+	else if (value == EMPTY_ERR)
+		return (print_error(E_EMPTY));
 	else
 		return (print_error(E_INVALID));
 }
